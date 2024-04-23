@@ -1,4 +1,4 @@
-function registro() {
+function registrar() {
     alert("Bienvenido/a a tecnohouse la distribuidora N°1 en el pais")
     alert("Crea tu cuenta")
     let nombre = prompt("Ingresa tu nombre y apellido")
@@ -26,15 +26,15 @@ function registro() {
             break
         }
     }
-    function datos(){
+    function recopilardatos(){
         const dato = []
         dato.push(nombre)
         dato.push(correo)
         dato.push(contraseña)
         dato.push(telefono)
-        console.table(dato)
+        console.log(dato)
 
     }
-    datos()
+    recopilardatos()
 }
-registro()
+registrar()
