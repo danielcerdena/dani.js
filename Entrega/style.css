@@ -1,0 +1,25 @@
+main{
+    display: flex;
+    width: 100%;
+    height: 50%;
+    gap: 20px;
+    align-items: center;
+}
+main .bienvenida{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+main .iniciodesesion{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap:10px ;
+}
+
+main .formulario{
+    display: flex;
+}
