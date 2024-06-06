@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "nombre": "Laptop",
+        "precio": 1500
+    },
+    {
+        "id": 2,
+        "nombre": "Smartphone",
+        "precio": 800
+    },
+    {
+        "id": 3,
+        "nombre": "Tablet",
+        "precio": 600
+    },
+    {
+        "id": 4,
+        "nombre": "Smartwatch",
+        "precio": 250
+    },
+    {
+        "id": 5,
+        "nombre": "Auriculares Bluetooth",
+        "precio": 100
+    },
+    {
+        "id": 6,
+        "nombre": "Cámara DSLR",
+        "precio": 1200
+    },
+    {
+        "id": 7,
+        "nombre": "Monitor 4K",
+        "precio": 400
+    },
+    {
+        "id": 8,
+        "nombre": "Teclado Mecánico",
+        "precio": 150
+    },
+    {
+        "id": 9,
+        "nombre": "Ratón Gaming",
+        "precio": 75
+    },
+    {
+        "id": 10,
+        "nombre": "Impresora Multifunción",
+        "precio": 300
+    }
+]

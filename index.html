@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
+    <div id="contenedordeproductos" class="products-container"></div>
+    <div class="cart-summary">
+        <h2>Summary</h2>
+        <p>Subtotal: <span id="subtotal">0€</span></p>
+        <p>Shipping Est.: <span id="shipping">0€</span></p>
+        <p>Total Price: <span id="total-price">0€</span></p>
+        <button id="checkout">Proceed to Checkout</button>
+    </div>
+    <section id="seccioncarrito"></section>
+    <script src="render.js"></script>
     <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </body>
 </html>

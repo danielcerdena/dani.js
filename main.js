@@ -1,40 +1,91 @@
-function registrar() {
-    alert("Bienvenido/a a tecnohouse la distribuidora N°1 en el pais")
-    alert("Crea tu cuenta")
-    let nombre = prompt("Ingresa tu nombre y apellido")
-    let correo = prompt("Ingresa tu correo electronico")
-    let contraseña = prompt("Ingresa tu contraseña")
-    let telefono = parseInt(prompt("Ingresa un numero de recuperacion"))
-    alert("Felicitaciones ya eres parte de tecnohouse")
-    alert("Inicia sesion")
-    let intentos = 0
-    while (intentos <= 3) {
-        let logueo = prompt("Ingresa tu correo")
-        let password = prompt("ingresa tu contraseña")
-
-        if (logueo === correo && password === contraseña) {
-            alert("Correo correcto")
-            break
-        } else {
-            intentos++
-            alert("Correo o contraseña incorrecta te quedan " + (3 - intentos) + " intentos ")
-        }
-
-        if (intentos === 3) {
-            alert("usted supero los intentos permitidos")
-            confirm("Al parecer olvidaste algun dato ¿Quieres enviar un mensaje de recuperacion a " + telefono + "?")
-            break
-        }
-    }
-    function recopilardatos(){
-        const dato = []
-        dato.push(nombre)
-        dato.push(correo)
-        dato.push(contraseña)
-        dato.push(telefono)
-        console.log(dato)
-
-    }
-    recopilardatos()
+let carrito = [];
+let carritoLS = localStorage.getItem("carrito");
+if (carritoLS) {
+    carrito = JSON.parse(carritoLS);
 }
-registrar()
+let contenedordeproductos = document.getElementById("contenedordeproductos");
+
+fetch("./db/data.json")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(producto => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.innerHTML = `
+                <h3>${producto.nombre}</h3>
+                <p>${producto.precio}€</p>
+                <div>
+                    <button class="Agregar" id="add-${producto.id}">+</button>
+                    <button class="Remover" id="remove-${producto.id}">-</button>
+                </div>
+            `;
+            contenedordeproductos.appendChild(card);
+        });
+
+        addtocartbutton(data);
+        removebutton(data);
+        rendercarrito(carrito);
+    });
+
+function addtocartbutton(productos) {
+    let addbutton = document.querySelectorAll(".Agregar");
+    addbutton.forEach(button => {
+        button.onclick = (e) => {
+            const productoid = e.currentTarget.id.replace('add-', '');
+            const productoseleccionado = productos.find(producto => producto.id == productoid);
+            if (productoseleccionado) {
+                const productInCart = carrito.find(producto => producto.id == productoid);
+                if (productInCart) {
+                    productInCart.cantidad += 1;
+                } else {
+                    productoseleccionado.cantidad = 1;
+                    carrito.push(productoseleccionado);
+                }
+                localStorage.setItem("carrito", JSON.stringify(carrito));
+                rendercarrito(carrito);
+            }
+        };
+    });
+}
+
+function removebutton() {
+    let removebutton = document.querySelectorAll(".Remover");
+    removebutton.forEach(button => {
+        button.onclick = (e) => {
+            const productoid = e.currentTarget.id.replace('remove-', '');
+            const productIndex = carrito.findIndex(producto => producto.id == productoid);
+            if (productIndex !== -1) {
+                carrito[productIndex].cantidad -= 1;
+                if (carrito[productIndex].cantidad === 0) {
+                    carrito.splice(productIndex, 1);
+                }
+                localStorage.setItem("carrito", JSON.stringify(carrito));
+                rendercarrito(carrito);
+            }
+        };
+    });
+}
+
+function rendercarrito(carrito) {
+    const subtotal = carrito.reduce((sum, producto) => sum + producto.precio * producto.cantidad, 0);
+    const shipping = 24; // Example shipping cost
+    const totalPrice = subtotal + shipping;
+
+    document.getElementById("subtotal").innerText = `${subtotal}€`;
+    document.getElementById("shipping").innerText = `${shipping}€`;
+    document.getElementById("total-price").innerText = `${totalPrice}€`;
+}
+
+document.getElementById("checkout").onclick = finalizarCompra;
+
+function finalizarCompra() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    Swal.fire({
+        title: "Pedido Realizado!",
+        text: "Gracias por tu compra!",
+        icon: "success"
+    });
+    carrito = [];
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    rendercarrito(carrito);
+}
